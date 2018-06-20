@@ -21,7 +21,7 @@ namespace Robot_Larissa_Anderson
                     for (int voltasDir = 0; voltasDir < 5; voltasDir++)
                     {
                         Ahead(100);
-                        TurnLeft(90);
+                        TurnRight(90);
                         TurnGunRight(90);
                         Fire(1);
 
@@ -30,7 +30,7 @@ namespace Robot_Larissa_Anderson
                     {
                         Ahead(200);
                         TurnLeft(90);
-                        TurnGunRight(180);
+                        TurnGunLeft(180);
                         Fire(1);
 
                     }
@@ -42,7 +42,7 @@ namespace Robot_Larissa_Anderson
                     for (int voltasDir45 = 0; voltasDir45 < 8; voltasDir45++)
                     {
                         Ahead(50);
-                        TurnLeft(45);
+                        TurnRight(45);
                         TurnGunRight(90);
                         Fire(1);
 
@@ -51,7 +51,7 @@ namespace Robot_Larissa_Anderson
                     {
                         Ahead(50);
                         TurnLeft(45);
-                        TurnGunRight(180);
+                        TurnGunLeft(180);
                         Fire(1);
 
                     }
