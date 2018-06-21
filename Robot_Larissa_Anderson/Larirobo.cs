@@ -1,64 +1,77 @@
 ﻿using Robocode;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Robot_Larissa_Anderson
 {
-    public class Larirobo : AdvancedRobot
+    public class Larirobo : Robot
     {
-        Boolean Angulo = true;
         public override void Run()
-        {            
-            while(true)
+        {
+            SetColors(Color.Blue, Color.Black, Color.Yellow);
+            while (true)
             {
-                if (Angulo == true)
-                {
-
-
-                    for (int voltasDir = 0; voltasDir < 5; voltasDir++)
-                    {
-                        Ahead(100);
-                        TurnRight(90);
-                        TurnGunRight(90);
-                        Fire(1);
-
-                    }
-                    for (int voltasEsq = 5; voltasEsq > 0; voltasEsq++)
-                    {
-                        Ahead(200);
-                        TurnLeft(90);
-                        TurnGunLeft(180);
-                        Fire(1);
-
-                    }
-                    Angulo = false;
-
-                }
-                else
-                {
-                    for (int voltasDir45 = 0; voltasDir45 < 8; voltasDir45++)
-                    {
-                        Ahead(50);
-                        TurnRight(45);
-                        TurnGunRight(90);
-                        Fire(1);
-
-                    }
-                    for (int voltasEsq = 8; voltasEsq > 0; voltasEsq++)
-                    {
-                        Ahead(50);
-                        TurnLeft(45);
-                        TurnGunLeft(180);
-                        Fire(1);
-
-                    }
-                    Angulo = true;
-                }
-
+                Ahead(100);
+                TurnRight(90);
+                TurnGunRight(360);
+                
+                //TurnLeft(180);
+                //TurnLeft(180);
+                //TurnGunLeft(180);
             }
         }
+        //public override void OnScannedRobot(ScannedRobotEvent evnt)
+        //{
+        //    Fire(1);
+        //}
+        public override void OnScannedRobot(ScannedRobotEvent e)
+        {
+            // Se o outro robô está próximo, e ele tem bastante vida,
+            // dispara intensamente!
+            if (e.Distance < 50 && Energy > 50)
+            {
+                Fire(3);
+            } // caso contrário, atira com intensidade 1.
+            else
+            {
+                Fire(1);
+            }
+            TurnRight(e.Bearing);
+            Ahead(e.Distance + 5);
+            // Depois de atirar chama o radar novamente,
+            // antes de girar o canhão
+            Scan();
+        }        public void onHitRobot(HitRobotEvent e)
+        {
+            TurnRight(e.Bearing);
+            // Faz o cálculo da intensidade necessária para enfraquecer o oponente
+            if (e.Energy > 16)
+            {
+                Fire(3);
+            }
+            else if (e.Energy > 10)
+            {
+                Fire(2);
+            }
+            else if (e.Energy > 4)
+            {
+                Fire(1);
+            }
+            else if (e.Energy > 2)
+            {
+                Fire(.5);
+            }
+            else if (e.Energy > .4)
+            {
+                Fire(.1);
+            }
+            Ahead(40); // E avança para se chocar com ele
+        }
     }
 }
+
+
