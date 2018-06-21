@@ -8,17 +8,18 @@ using System.Threading.Tasks;
 
 namespace Robot_Larissa_Anderson
 {
-    public class Larirobo : Robot
+    public class Larirobo : AdvancedRobot
     {
         public override void Run()
         {
             SetColors(Color.Blue, Color.Black, Color.Yellow);
             while (true)
             {
-                Ahead(100);
-                TurnRight(90);
-                TurnGunRight(360);
-                
+                SetAhead(100);
+                SetTurnRight(90);
+                SetTurnGunRight(360);
+                Execute();
+
                 //TurnLeft(180);
                 //TurnLeft(180);
                 //TurnGunLeft(180);
@@ -30,22 +31,21 @@ namespace Robot_Larissa_Anderson
         //}
         public override void OnScannedRobot(ScannedRobotEvent e)
         {
-            // Se o outro robô está próximo, e ele tem bastante vida,
-            // dispara intensamente!
+            // Se o outro robô está próximo, e ele tem bastante vida, metralha o robo.
             if (e.Distance < 50 && Energy > 50)
             {
-                Fire(3);
-            } // caso contrário, atira com intensidade 1.
+                Fire(5);
+            } // caso contrário, atira com intensidade 2.
             else
             {
-                Fire(1);
+                Fire(3);
             }
             TurnRight(e.Bearing);
             Ahead(e.Distance + 5);
             // Depois de atirar chama o radar novamente,
             // antes de girar o canhão
             Scan();
-        }        public void onHitRobot(HitRobotEvent e)
+        }        public override void OnHitRobot(HitRobotEvent e)
         {
             TurnRight(e.Bearing);
             // Faz o cálculo da intensidade necessária para enfraquecer o oponente
@@ -69,8 +69,8 @@ namespace Robot_Larissa_Anderson
             {
                 Fire(.1);
             }
-            Ahead(40); // E avança para se chocar com ele
-        }
+            Ahead(50); // E avança para se chocar com ele
+        }       
     }
 }
 
